@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <title>Theos Online Shop</title>
+</head>
+<body>
+  <h1>Versandoptionen für ihre Bestellung:</h1>
+    <section>
+        <h2>Bestellübersicht:</h2>
+        <table class="table">
+            <thead>
+            <tr align="left">
+                <th scope="col">Bezeichnung</th>
+                <th scope="col">Einzelpreis</th>
+                <th scope="col">Stückzahl</th>
+                <th scope="col">Preis</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="p : ${produkte}" th:object="${p}" align="left">
+                <th><span scope="row" th:text="*{name}">Produkt Name</span></th>
+                <td><span th:text="*{einzelPreis}">Produkt Preis</span>€</td>
+                <td><span th:text="*{anzahl}">Produkt Anzahl</span></td>
+                <td><span th:text="*{gesamtPreis}">Gesamt Preis</span>€</td>
+            </tr>
+
+            <tr align="left">
+                <th>Bestellwert<th>
+                <td></td>
+                <td><span th:text="${bestellwert}">eigendlicher Gesamtpreis</span>€</td>
+            </tr>
+            <tr align="left">
+                <th>Versandtkosten<th>
+                <td></td>
+                <td><span th:text="${versandtKosten}">eigendlicher Gesamtpreis</span>€</td>
+            </tr>
+            <tr align="left">
+                <th>Gesamtpreis<th>
+                <td></td>
+                <td><span th:text="${gesamtPreis}">eigendlicher Gesamtpreis</span>€</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+    <section>
+        <form method="get">
+            <div class="form-check form-check-inline">
+                <input th:checked="${standardVersandt}" value="standard" onchange="this.form.submit()" class="form-check-input" type="radio" name="versandt" id="flexRadioDefault1">
+                <label class="form-check-label" for="flexRadioDefault1">
+                    Regulärer Versandt <span th:text="${standardVersandKosten}"></span>€
+                </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input th:checked="${standardVersandt == false}" value="express" onchange="this.form.submit()" class="form-check-input" type="radio" name="versandt" id="flexRadioDefault2">
+                <label class="form-check-label" for="flexRadioDefault2">
+                    Expressversandt <span th:text="${expressVersandKosten}"></span>€
+                </label>
+            </div>
+        </form>
+    </section>
+    <section>
+        <form method="post">
+            <button type="submit">
+                Bestellen
+            </button>
+        </form>
+    </section>
+</body>
+</html>
