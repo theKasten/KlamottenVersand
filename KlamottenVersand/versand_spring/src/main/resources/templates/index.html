@@ -19,7 +19,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="p : ${produkte}" th:object="${p}" align="left">
+            <tr th:each="p : ${bestellung?.getProdukte()}" th:object="${p}" align="left">
                 <th><span scope="row" th:text="*{name}">Produkt Name</span></th>
                 <td><span th:text="*{einzelPreis}">Produkt Preis</span>€</td>
                 <td><span th:text="*{anzahl}">Produkt Anzahl</span></td>
@@ -29,17 +29,17 @@
             <tr align="left">
                 <th>Bestellwert<th>
                 <td></td>
-                <td><span th:text="${bestellwert}">eigendlicher Gesamtpreis</span>€</td>
+                <td><span th:text="${bestellung.preis()}">eigendlicher Gesamtpreis</span>€</td>
             </tr>
             <tr align="left">
                 <th>Versandtkosten<th>
                 <td></td>
-                <td><span th:text="${versandtKosten}">eigendlicher Gesamtpreis</span>€</td>
+                <td><span th:text="${bestellung.versandKosten()}">eigendlicher Gesamtpreis</span>€</td>
             </tr>
             <tr align="left">
                 <th>Gesamtpreis<th>
                 <td></td>
-                <td><span th:text="${gesamtPreis}">eigendlicher Gesamtpreis</span>€</td>
+                <td><span th:text="${bestellung.preisMitVersand()}">eigendlicher Gesamtpreis</span>€</td>
             </tr>
             </tbody>
         </table>
@@ -47,13 +47,13 @@
     <section>
         <form method="get">
             <div class="form-check form-check-inline">
-                <input th:checked="${standardVersandt}" value="standard" onchange="this.form.submit()" class="form-check-input" type="radio" name="versandt" id="flexRadioDefault1">
+                <input th:checked="${bestellung.isVersandOptionStandard()}" onchange="this.form.submit()" class="form-check-input" type="radio" name="versandt" id="flexRadioDefault1" value="standard">
                 <label class="form-check-label" for="flexRadioDefault1">
                     Regulärer Versandt <span th:text="${standardVersandKosten}"></span>€
                 </label>
             </div>
             <div class="form-check form-check-inline">
-                <input th:checked="${standardVersandt == false}" value="express" onchange="this.form.submit()" class="form-check-input" type="radio" name="versandt" id="flexRadioDefault2">
+                <input th:checked="${bestellung.isVersandOptionStandard() == false}" onchange="this.form.submit()" class="form-check-input" type="radio" name="versandt" id="flexRadioDefault2" value="express">
                 <label class="form-check-label" for="flexRadioDefault2">
                     Expressversandt <span th:text="${expressVersandKosten}"></span>€
                 </label>
